@@ -5,7 +5,7 @@ function App() {
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      text: "👋 Hello! I'm your AI Chatbot. How can I help you today?",
+      text: "👋 Hello! Welcome to AI Chatbot.",
     },
   ]);
 
@@ -19,22 +19,24 @@ function App() {
       text: input,
     };
 
-    let botReply = "I'm still learning! 😊";
+    let reply = "I'm still learning. 😊";
 
     if (input.toLowerCase().includes("hello")) {
-      botReply = "Hello! Nice to meet you.";
+      reply = "Hello! How can I help you today?";
     } else if (input.toLowerCase().includes("react")) {
-      botReply = "React is a JavaScript library for building user interfaces.";
+      reply = "React is a JavaScript library for building user interfaces.";
     } else if (input.toLowerCase().includes("how are you")) {
-      botReply = "I'm doing great! Thanks for asking.";
+      reply = "I'm doing great. Thanks for asking!";
+    } else if (input.toLowerCase().includes("bye")) {
+      reply = "Goodbye! Have a wonderful day.";
     }
 
     const botMessage = {
       sender: "bot",
-      text: botReply,
+      text: reply,
     };
 
-    setMessages([...messages, userMessage, botMessage]);
+    setMessages((prev) => [...prev, userMessage, botMessage]);
     setInput("");
   };
 
@@ -49,21 +51,17 @@ function App() {
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={
-                msg.sender === "user"
-                  ? "message user"
-                  : "message bot"
-              }
+              className={`message ${msg.sender}`}
             >
               {msg.text}
             </div>
           ))}
         </div>
 
-        <div className="input-area">
+        <div className="inputArea">
           <input
             type="text"
-            placeholder="Type your message..."
+            placeholder="Type a message..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
@@ -71,7 +69,9 @@ function App() {
             }}
           />
 
-          <button onClick={sendMessage}>Send</button>
+          <button onClick={sendMessage}>
+            Send
+          </button>
         </div>
       </div>
     </div>
